@@ -94,15 +94,9 @@ recode_server <- function(input, output, session, dataset_name) {
   })
 
   # Display the dataset using DT package
-  output$data_table <- renderDT({
-    datatable(
-      dataset(),
-      options = list(
-        language = list(url = "//cdn.datatables.net/plug-ins/1.10.25/i18n/Chinese.json"),
-        scrollX = TRUE
-      )
-    )
-  })
+  output$data_table <- DT::renderDataTable({
+    mtest::downloadDT(dataset(),"当前数据集如下：")},server = FALSE)
+
 
   # Return the updated dataset
   return(updated_dataset)
