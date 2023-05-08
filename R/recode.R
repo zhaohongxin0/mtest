@@ -40,15 +40,13 @@ recode_server <- function(input, output, session, dataset_name) {
 
   # Reactive expression for the dataset
   dataset <- reactiveVal(dataset_name)
-  updated_dataset <- reactiveVal(NULL)
+
 
   # Update the variable selection input
   observe({
     updateSelectInput(session, "variable", choices = colnames(dataset()))
   })
 
-  # Reactive expression for the dataset
-  dataset <- reactiveVal(persons)
 
   # Generate value editors based on the selected variable
   output$value_editors <- renderUI({
@@ -72,6 +70,7 @@ recode_server <- function(input, output, session, dataset_name) {
   })
 
   # Update values and save changes
+  # Update values and save changes
   observeEvent(input$save_changes, {
     new_data <- dataset()
     unique_values <- unique(new_data[[input$variable]])
@@ -81,26 +80,33 @@ recode_server <- function(input, output, session, dataset_name) {
       })
       value_mapper <- setNames(new_values_list, unique_values)
 
-      if (input$modify_option == "new") {
-        new_var_name <- input$new_var_name
-        if (new_var_name != "") {
-          new_data <- new_data %>%
-            mutate(!!new_var_name := new_data[[input$variable]]) %>%
-            relocate(!!sym(new_var_name), .after = !!sym(input$variable))
-          new_data[[new_var_name]] <- as.factor(new_data[[new_var_name]])
-          new_data[[new_var_name]] <- recode(new_data[[new_var_name]], !!!value_mapper)
+      # Check if there are any replacements
+      if (length(value_mapper) > 0) {
+        if (input$modify_option == "new") {
+          new_var_name <- input$new_var_name
+          if (new_var_name != "") {
+            new_data <- new_data %>%
+              mutate(!!new_var_name := new_data[[input$variable]]) %>%
+              relocate(!!sym(new_var_name), .after = !!sym(input$variable))
+            new_data[[new_var_name]] <- as.factor(new_data[[new_var_name]])
+            new_data[[new_var_name]] <- recode(new_data[[new_var_name]], !!!value_mapper)
+          }
+        } else {
+          new_data[[input$variable]] <- as.factor(new_data[[input$variable]])
+          new_data[[input$variable]] <- recode(new_data[[input$variable]], !!!value_mapper)
         }
+        dataset(new_data)
       } else {
-        new_data[[input$variable]] <- as.factor(new_data[[input$variable]])
-        new_data[[input$variable]] <- recode(new_data[[input$variable]], !!!value_mapper)
+        # Display a warning message if there are no replacements
+        showNotification("请提供至少一个替换值。", type = "warning")
       }
-      dataset(new_data)
     }
   })
 
+
   # Reset dataset to the initial state
   observeEvent(input$reset, {
-    dataset(persons)
+    dataset(dataset_name)
   })
 
   # Display the dataset using DT package
@@ -109,11 +115,8 @@ recode_server <- function(input, output, session, dataset_name) {
 
 
   # Return the updated dataset
-  return(updated_dataset)
+  return(dataset)
 
-  # Add the following code at the end of the server function
-  observeEvent(input$reset, {
-    removeModal(session$ns("modal"))
-  })
+
 
 }
