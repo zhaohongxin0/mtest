@@ -1,7 +1,12 @@
 import(shiny)
 import(dplyr)
 import(DT)
+import(ragg)
+import(eoffice)
+import(ggplot2)
 
 export(downloadDT)
+export(downloadPlot_UI)
+export(downloadPlot_server)
 # export(recode_UI)
 # export(recode_server)
