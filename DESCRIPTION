@@ -1,0 +1,11 @@
+Package: mtest
+Title: My personal tool
+Version: 0.1.0
+Authors@R: person("Hongxin Zhao", email = "zhx@zhaohx.com", role = c("aut", "cre"))
+Description: Test my product.
+Depends: R (>= 4.0)
+License: GPL-3
+Imports:
+    shiny,
+    dplyr,
+    DT
