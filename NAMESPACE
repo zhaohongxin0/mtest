@@ -3,3 +3,5 @@ import(dplyr)
 import(DT)
 
 export(downloadDT)
+export(recode_UI)
+export(recode_server)
