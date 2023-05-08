@@ -2,32 +2,42 @@
 recode_UI <- function(id) {
   ns <- NS(id)
   tagList(
-    actionButton(ns("open_modal"), "打开数据集修改器"),
-    modalDialog(
-      title = "修改数据集",
-      sidebarLayout(
-        sidebarPanel(
-          selectInput(ns("variable"), "选择变量：", choices = NULL),
-          uiOutput(ns("value_editors")),
-          radioButtons(ns("modify_option"), "修改方式：", choices = c("原变量基础上修改" = "original", "新生成的变量上修改" = "new")),
-          conditionalPanel(
-            condition = "input.modify_option == 'new'",
-            textInput(ns("new_var_name"), "新变量名称：", value = "")
-          ),
-          actionButton(ns("save_changes"), "保存更改"),
-          actionButton(ns("reset"), "复位")
-        ),
-        mainPanel(
-          DTOutput(ns("data_table"))
-        )
-      ),
-      size = "l"
-    )
+    actionButton(ns("open_modal"), "打开数据集修改器")
   )
 }
 
 # 数据集修改模块的服务器端逻辑
 recode_server <- function(input, output, session, dataset_name) {
+  # Add the following code at the beginning of the server function
+  observeEvent(input$open_modal, {
+    showModal(
+      modalDialog(
+        title = "修改数据集",
+        sidebarLayout(
+          sidebarPanel(
+            selectInput(session$ns("variable"), "选择变量：", choices = NULL),
+            uiOutput(session$ns("value_editors")),
+            radioButtons(session$ns("modify_option"), "修改方式：", choices = c("原变量基础上修改" = "original", "新生成的变量上修改" = "new")),
+            conditionalPanel(
+              condition = "input.modify_option == 'new'",
+              textInput(session$ns("new_var_name"), "新变量名称：", value = "")
+            ),
+            actionButton(session$ns("save_changes"), "保存更改"),
+            actionButton(session$ns("reset"), "复位")
+          ),
+          mainPanel(
+            DTOutput(session$ns("data_table"))
+          )
+        ),
+        size = "l",
+        # Add an id to the modal
+        id = session$ns("modal")
+      )
+    )
+  })
+
+
+
   # Reactive expression for the dataset
   dataset <- reactiveVal(dataset_name)
   updated_dataset <- reactiveVal(NULL)
@@ -100,4 +110,10 @@ recode_server <- function(input, output, session, dataset_name) {
 
   # Return the updated dataset
   return(updated_dataset)
+
+  # Add the following code at the end of the server function
+  observeEvent(input$reset, {
+    removeModal(session$ns("modal"))
+  })
+
 }
