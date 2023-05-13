@@ -8,4 +8,7 @@ License: GPL-3
 Imports:
     shiny,
     dplyr,
-    DT
+    DT,
+    ragg,
+    eoffice,
+    ggplot2
