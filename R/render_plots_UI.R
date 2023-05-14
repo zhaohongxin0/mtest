@@ -20,9 +20,9 @@
 #'   })
 #' })
 #' }
-render_plots_UI <- function(plots, title_fun) {
+render_plots_UI <- function(plots, title_text) {
   titles <- lapply(seq_along(plots), function(i) {
-    title_fun(i)
+    glue(title_text)
   })
 
   plot_UIs <- lapply(seq_along(plots), function(i) {
@@ -38,3 +38,4 @@ render_plots_UI <- function(plots, title_fun) {
   out <- do.call(tagList, unlist(plot_UIs, recursive = FALSE))
   return(out)
 }
+
