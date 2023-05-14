@@ -58,5 +58,7 @@ add_table_to_word <- function(word_doc, table, orientation = "portrait", referen
   shiny.silent.error = function(e) {
     word_doc <- word_doc
   })
+
+  return(word_doc)
 }
 
