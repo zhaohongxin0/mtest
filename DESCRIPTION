@@ -14,5 +14,6 @@ Imports:
     eoffice,
     ggplot2,
     officer,
-    flextable
+    flextable,
+    glue
 RoxygenNote: 7.2.3
