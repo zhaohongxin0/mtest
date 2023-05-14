@@ -2,6 +2,7 @@ Package: mtest
 Title: My personal tool
 Version: 0.1.0
 Authors@R: person("Hongxin Zhao", email = "zhx@zhaohx.com", role = c("aut", "cre"))
+Encoding: UTF-8
 Description: Test my product.
 Depends: R (>= 4.0)
 License: GPL-3
@@ -11,4 +12,7 @@ Imports:
     DT,
     ragg,
     eoffice,
-    ggplot2
+    ggplot2,
+    officer,
+    flextable
+RoxygenNote: 7.2.3

@@ -1,4 +1,25 @@
-## 前置项目 创造dt下载的函数----
+#' Render a DT table with download buttons
+#'
+#' This function renders a DT table with buttons to download the table in various formats, such as CSV and Excel.
+#' It also provides options to download the current page or all data.
+#'
+#' @param dt A data frame or tibble to be rendered as a DT table
+#' @param title A string representing the title of the table, which will be displayed as the table caption
+#'
+#' @return A DT table with download buttons
+#' @examples
+#' # In a Shiny app
+#' # UI part:
+#' DTOutput("orig_data")
+#'
+#' # Server part:
+#' output$orig_data <- DT::renderDataTable({
+#'   req(orig_data()) # Ensure the dataset is loaded
+#'   mtest::downloadDT(orig_data(), "The original data is as follows")}, server = FALSE)
+#'
+#' @importFrom DT datatable
+#' @export
+
 downloadDT <- function(dt, title) {
 
   DT::datatable(dt,
