@@ -25,7 +25,7 @@ output$plots <- renderUI({
   req(input$OK)
   isolate({
     req(length(input$comp) > 0 || length(input$solo) > 0)
-    render_plots_UI(plots(), glue("Estimated Marginal Means for {input$dep} by {input$emMeans[[i]]}"))
+    render_plots_UI(plots(), "Estimated Marginal Means for {input$dep} by {input$emMeans[[i]]}")
   })
 })
 }
