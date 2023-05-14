@@ -20,6 +20,9 @@ add_table_to_word(
 
 \item{reference_text}{A character string containing the reference text to be added after the table. Default is an empty string.}
 }
+\value{
+A new officer word object that added our table to the original word object
+}
 \description{
 This function adds a table to a Word document with a specified orientation and reference text.
 The function modifies the input Word document directly and does not return any values.
@@ -34,9 +37,9 @@ output$downloadData <- downloadHandler(
   content = function(file) {
     tmp <- read_docx()
 
-    add_table_to_word(tmp, durbin_table(), "portrait", "参考文献：Fox, J., & Weisberg, S. (2020). car: Companion to Applied Regression. [R package]. Retrieved from https://cran.r-project.org/package=car.")
+    tmp <- add_table_to_word(tmp, durbin_table(), "portrait", "参考文献：Fox, J., & Weisberg, S. (2020). car: Companion to Applied Regression. [R package]. Retrieved from https://cran.r-project.org/package=car.")
 
-    add_table_to_word(tmp, collin_table(), "portrait", "参考文献：Fox, J., & Weisberg, S. (2020). car: Companion to Applied Regression. [R package]. Retrieved from https://cran.r-project.org/package=car.")
+    tmp <- add_table_to_word(tmp, collin_table(), "portrait", "参考文献：Fox, J., & Weisberg, S. (2020). car: Companion to Applied Regression. [R package]. Retrieved from https://cran.r-project.org/package=car.")
 
     tmp \%>\% print(target = file)
   },

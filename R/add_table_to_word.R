@@ -7,7 +7,7 @@
 #' @param table A flextable object to be added to the Word document.
 #' @param orientation A character string specifying the orientation of the table. Valid values are "portrait" and "landscape". Default is "portrait".
 #' @param reference_text A character string containing the reference text to be added after the table. Default is an empty string.
-#'
+#' @return A new officer word object that added our table to the original word object
 #' @examples
 #' \dontrun{
 #' # In a Shiny app
@@ -18,9 +18,9 @@
 #'   content = function(file) {
 #'     tmp <- read_docx()
 #'
-#'     add_table_to_word(tmp, durbin_table(), "portrait", "参考文献：Fox, J., & Weisberg, S. (2020). car: Companion to Applied Regression. [R package]. Retrieved from https://cran.r-project.org/package=car.")
+#'     tmp <- add_table_to_word(tmp, durbin_table(), "portrait", "参考文献：Fox, J., & Weisberg, S. (2020). car: Companion to Applied Regression. [R package]. Retrieved from https://cran.r-project.org/package=car.")
 #'
-#'     add_table_to_word(tmp, collin_table(), "portrait", "参考文献：Fox, J., & Weisberg, S. (2020). car: Companion to Applied Regression. [R package]. Retrieved from https://cran.r-project.org/package=car.")
+#'     tmp <- add_table_to_word(tmp, collin_table(), "portrait", "参考文献：Fox, J., & Weisberg, S. (2020). car: Companion to Applied Regression. [R package]. Retrieved from https://cran.r-project.org/package=car.")
 #'
 #'     tmp %>% print(target = file)
 #'   },
