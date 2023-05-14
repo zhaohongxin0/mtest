@@ -1,11 +1,12 @@
-#' Add a table to a Word document
+#' Render a list of plots in a Shiny UI
 #'
-#' This function adds a table to a Word document with a specified orientation and reference text.
-#' The function modifies the input Word document directly and does not return any values.
+#' This function renders a list of plots in a Shiny UI, along with their titles.
 #'
-#' @param plots A list of ggplot objects to be rendered in the Shiny app.
-#' @param titles A character string containing the title text to be displayed above each plot. Can include placeholders for dynamic values.
-#' @return A Shiny UI element containing the rendered plots and their titles.
+#' @param plots A list of plot objects to be rendered
+#' @param title_fun A function that takes an integer i and returns a string for the title of the i-th plot
+#' @return A tagList object containing the rendered plots and titles
+#' @export
+#'
 #' @examples
 #' \dontrun{
 #' # In a Shiny app
@@ -13,16 +14,15 @@
 #'   req(input$OK)
 #'   isolate({
 #'     req(length(input$comp) > 0 || length(input$solo) > 0)
-#'     render_plots_UI(plots(), "Estimated Marginal Means for {input$dep} by {input$emMeans[[i]]}")
+#'     render_plots_UI(plots(), function(i) {
+#'       glue("Estimated Marginal Means for {input$dep} by {input$emMeans[[i]]}")
+#'     })
 #'   })
 #' })
 #' }
-#'
-#' @export
-
-render_plots_UI <- function(plots, title_glue) {
+render_plots_UI <- function(plots, title_fun) {
   titles <- lapply(seq_along(plots), function(i) {
-    glue(title_glue)
+    title_fun(i)
   })
 
   plot_UIs <- lapply(seq_along(plots), function(i) {
