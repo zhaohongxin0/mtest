@@ -46,11 +46,17 @@ add_table_to_word <- function(word_doc, table, orientation = "portrait", referen
       word_doc <- word_doc %>%
         body_add_flextable(fitTable) %>%
         body_add_par(" ") %>%
-        body_add_fpar(fpar(ftext(reference_text,prop =fp_text(font.size = 8))))%>%
-        body_end_section_portrait(w = 21/2.54, h = 29.7/2.54)
+        body_add_fpar(fpar(ftext(reference_text, prop = fp_text(font.size = 8))))
+
+      if (orientation == "landscape") {
+        word_doc <- word_doc %>% body_end_section_landscape(w = 21 / 2.54, h = 29.7 / 2.54)
+      } else {
+        word_doc <- word_doc %>% body_end_section_portrait(w = 21 / 2.54, h = 29.7 / 2.54)
+      }
     }
   },
   shiny.silent.error = function(e) {
     word_doc <- word_doc
   })
 }
+
