@@ -30,23 +30,24 @@
 #'
 #' @export
 add_table_to_word <- function(word_doc, table, orientation = "portrait", reference_text = "") {
-  page_width <- 29.7 / 2.54
-  page_width2 <- 21 / 2.54
-  if (orientation == "landscape") {
-    max_width = page_width
-  } else {
-    max_width = page_width2
-  }
 
   tryCatch({
     if (isTruthy(table)) {
-      table <- table %>% flextable::fit_to_width(max_width = max_width, unit = "in")
+
+      page_width <- 29.7 / 2.54
+      page_width2 <- 21 / 2.54
+      if (orientation == "landscape") {
+        max_width = page_width
+      } else {
+        max_width = page_width2
+      }
+
+      fitTable <- table %>% fit_to_width(max_width = max_width, unit = "in")
       word_doc <- word_doc %>%
-        officer::body_add_flextable(table) %>%
-        officer::body_add_par(" ") %>%
-        officer::body_add_fpar(flextable::fpar(flextable::ftext(text,
-                                                                prop = flextable::fp_text(font.size = 8))))%>%
-        officer::body_end_section_portrait(w = 21/2.54, h = 29.7/2.54)
+        body_add_flextable(fitTable) %>%
+        body_add_par(" ") %>%
+        body_add_fpar(fpar(ftext(reference_text,prop =fp_text(font.size = 8))))%>%
+        body_end_section_portrait(w = 21/2.54, h = 29.7/2.54)
     }
   },
   shiny.silent.error = function(e) {
