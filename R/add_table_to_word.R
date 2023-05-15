@@ -18,9 +18,10 @@
 #'   content = function(file) {
 #'     tmp <- read_docx()
 #'
-#'     tmp <- add_table_to_word(tmp, durbin_table(), "portrait", "参考文献：Fox, J., & Weisberg, S. (2020). car: Companion to Applied Regression. [R package]. Retrieved from https://cran.r-project.org/package=car.")
+#'     tables_list <- list(durbin_table(), collin_table())
+#'     reference_text <- "参考文献：Fox, J., & Weisberg, S. (2020). car: Companion to Applied Regression. [R package]. Retrieved from https://cran.r-project.org/package=car."
 #'
-#'     tmp <- add_table_to_word(tmp, collin_table(), "portrait", "参考文献：Fox, J., & Weisberg, S. (2020). car: Companion to Applied Regression. [R package]. Retrieved from https://cran.r-project.org/package=car.")
+#'     tmp <- add_tables_to_word(tmp, tables_list, "portrait", reference_text)
 #'
 #'     tmp %>% print(target = file)
 #'   },

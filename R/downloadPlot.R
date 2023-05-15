@@ -183,4 +183,3 @@ downloadPlot_server <- function(id, plot, x, y) {
 }
 
 
-

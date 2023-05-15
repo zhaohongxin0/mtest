@@ -12,5 +12,11 @@ export(downloadDT)
 export(downloadPlot_UI)
 export(downloadPlot_server)
 export(add_table_to_word)
+export(add_tables_to_word)
 export(add_plot_to_word)
+export(add_plots_to_word)
 export(render_plots_UI)
+export(extract_numeric_factors)
+
+
+
