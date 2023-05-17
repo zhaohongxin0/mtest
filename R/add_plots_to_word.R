@@ -52,7 +52,7 @@ add_plots_to_word <- function(word_doc, plots, base_width, x, y, orientation = "
     if (length(plots) > 0) {
       for (i in seq_along(plots)) {
         word_doc <- word_doc %>%
-          body_add_gg(plots[[i]], width = base_width, height = base_width * y / x) %>%
+          body_add_plot(plots[[i]], width = base_width, height = base_width * y / x) %>%
           body_add_par(" ")
 
         if (orientation == "landscape") {
