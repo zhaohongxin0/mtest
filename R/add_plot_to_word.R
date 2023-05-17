@@ -34,7 +34,7 @@ add_plot_to_word <- function(word_doc, plot, base_width, x, y, orientation = "po
   tryCatch({
     if (isTruthy(plot)) {
       word_doc <- word_doc %>%
-        body_add_gg(plot, width = base_width, height = base_width * y / x) %>%
+        body_add_plot(plot, width = base_width, height = base_width * y / x) %>%
         body_add_par(" ") %>%
         body_add_fpar(fpar(ftext(reference_text, prop = fp_text(font.size = 8))))
 
