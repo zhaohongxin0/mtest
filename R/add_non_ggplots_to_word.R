@@ -11,6 +11,11 @@
 #' @param orientation Character, the orientation of the page, either "portrait" or "landscape" (default: "portrait")
 #' @param reference_texts Character vector or NULL, the reference texts to be added after all the plots (default: NULL)
 #' @return The modified officer Word document object with the ggplot objects added
+#' @import dplyr
+#' @import officer
+#' @import flextable
+#' @import glue
+
 #' @examples
 #'
 #' ## 下载包含多个图像的Word文档
@@ -47,26 +52,26 @@
 
 #' @export
 
-add_plots_to_word <- function(word_doc, plots, base_width, x, y, orientation = "portrait", reference_texts = NULL) {
+add_non_ggplots_to_word <- function(word_doc, plots, base_width, x, y, orientation = "portrait", reference_texts = NULL) {
   tryCatch({
 
-      for (i in seq_along(plots)) {
-        word_doc <- word_doc %>%
-          body_add_gg(plots[[i]], width = base_width, height = base_width * y / x) %>%
-          body_add_par(" ")
+    for (i in seq_along(plots)) {
+      word_doc <- word_doc %>%
+        body_add_plot(plots[[i]], width = base_width, height = base_width * y / x) %>%
+        body_add_par(" ")
 
-        if (orientation == "landscape") {
-          word_doc <- word_doc %>% body_end_section_landscape(w = 21 / 2.54, h = 29.7 / 2.54)
-        } else {
-          word_doc <- word_doc %>% body_end_section_portrait(w = 21 / 2.54, h = 29.7 / 2.54)
-        }
+      if (orientation == "landscape") {
+        word_doc <- word_doc %>% body_end_section_landscape(w = 21 / 2.54, h = 29.7 / 2.54)
+      } else {
+        word_doc <- word_doc %>% body_end_section_portrait(w = 21 / 2.54, h = 29.7 / 2.54)
       }
+    }
 
-      if (!is.null(reference_texts)) {
-        word_doc <- word_doc %>%
-          body_add_par(" ") %>%
-          body_add_fpar(fpar(ftext(paste(reference_texts, collapse = "\n"), prop = fp_text(font.size = 8))))
-      }
+    if (!is.null(reference_texts)) {
+      word_doc <- word_doc %>%
+        body_add_par(" ") %>%
+        body_add_fpar(fpar(ftext(paste(reference_texts, collapse = "\n"), prop = fp_text(font.size = 8))))
+    }
 
   },
   error = function(e) {

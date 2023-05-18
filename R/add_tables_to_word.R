@@ -37,6 +37,7 @@
 add_tables_to_word <- function(word_doc, tables_list, orientation = "portrait", reference_text = "") {
 
   tryCatch({
+    tables_list
     if (isTruthy(tables_list)) {
 
       page_width <- 29.7 / 2.54
