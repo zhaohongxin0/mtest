@@ -44,7 +44,8 @@ add_table_to_word <- function(word_doc, table, orientation = "portrait", referen
         max_width = page_width2
       }
 
-      fitTable <- table %>% fit_to_width(max_width = max_width, unit = "in")
+      fitTable <- table
+      # %>% fit_to_width(max_width = max_width, unit = "in")
       word_doc <- word_doc %>%
         body_add_flextable(fitTable) %>%
         body_add_par(" ") %>%
