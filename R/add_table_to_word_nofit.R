@@ -21,7 +21,7 @@
 #'     tables_list <- list(durbin_table(), collin_table())
 #'     reference_text <- "参考文献：Fox, J., & Weisberg, S. (2020). car: Companion to Applied Regression. [R package]. Retrieved from https://cran.r-project.org/package=car."
 #'
-#'     tmp <- add_tables_to_word(tmp, tables_list, "portrait", reference_text)
+#'     tmp <- add_tables_to_word(tmp, tables_list, 29.7,21,"portrait", reference_text)
 #'
 #'     tmp %>% print(target = file)
 #'   },
@@ -30,30 +30,30 @@
 #' }
 #'
 #' @export
-add_table_to_word <- function(word_doc, table, orientation = "portrait", reference_text = "") {
+add_table_to_word_nofit <- function(word_doc, table, long = 29.7, short = 21,orientation = "portrait", reference_text = "") {
 
   tryCatch({
     table
     if (isTruthy(table)) {
 
-      page_width <- 29.7 / 2.54
-      page_width2 <- 21 / 2.54
-      if (orientation == "landscape") {
-        max_width = page_width
-      } else {
-        max_width = page_width2
-      }
 
-      fitTable <- table %>% fit_to_width(max_width = max_width, unit = "in")
+      # if (orientation == "landscape") {
+      #   max_width = page_width
+      # } else {
+      #   max_width = page_width2
+      # }
+
+      fitTable <- table
+      # %>% fit_to_width(max_width = max_width, unit = "in")
       word_doc <- word_doc %>%
         body_add_flextable(fitTable) %>%
         body_add_par(" ") %>%
         body_add_fpar(fpar(ftext(reference_text, prop = fp_text(font.size = 8))))
 
       if (orientation == "landscape") {
-        word_doc <- word_doc %>% body_end_section_landscape(w = 21 / 2.54, h = 29.7 / 2.54)
+        word_doc <- word_doc %>% body_end_section_landscape(w = long/2.54, h = short/2.54)
       } else {
-        word_doc <- word_doc %>% body_end_section_portrait(w = 21 / 2.54, h = 29.7 / 2.54)
+        word_doc <- word_doc %>% body_end_section_portrait(w = long/2.54, h = short/2.54)
       }
     }
   },
