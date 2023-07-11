@@ -142,6 +142,6 @@ recodeServer <- function(input, output, session, id, data) {
   # Display the dataset using DT package
   output[[ns("data_table")]] <- DT::renderDataTable({
     req(dataset()) # 确保数据集已加载
-    mtest::downloadDT(dataset(),"数据如下")},server = FALSE)
+    mtest::downloadDT(dataset(),"数据如下")},server = T)
   return(dataset)
 }

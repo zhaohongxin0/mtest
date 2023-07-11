@@ -99,7 +99,7 @@ fluidPage(
 
   output$data_filtered <- DT::renderDataTable({
     req(data_filtered()) # Ensure the dataset is loaded
-    mtest::downloadDT(data_filtered(), "筛选后的数据如下")}, server = FALSE)
+    mtest::downloadDT(data_filtered(), "筛选后的数据如下")}, server = T)
 
 
   output$code_dplyr <- renderPrint({

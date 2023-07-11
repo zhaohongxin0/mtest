@@ -98,7 +98,7 @@ uploadServer<- function(input, output, session, id) {
 
   output[[paste0(id, "_import_data")]] <- DT::renderDataTable({
     req(imported$data()) # Ensure the dataset is loaded
-    mtest::downloadDT(imported$data(), "")}, server = FALSE)
+    mtest::downloadDT(imported$data(), "")}, server = T)
 
 
   return(imported$data)

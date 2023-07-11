@@ -254,7 +254,7 @@ observeEvent(input$reset_fill, {
 # 显示数据----
 output$imputed_data <- DT::renderDataTable({
   req(imputed_data()) # 确保数据集已加载
-  mtest::downloadDT(imputed_data(),"数据如下")},server = FALSE)
+  mtest::downloadDT(imputed_data(),"数据如下")},server = T)
 
 output$imputed_Summary <- renderText({
   req(imputed_data())
